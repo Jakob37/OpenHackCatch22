@@ -33,6 +33,7 @@ function retrieve_data() {
 
   return JSON.stringify(last_generated_data);
 }
+
 function authorize(credentials, callback) {
   var clientSecret = credentials.installed.client_secret;
   var clientId = credentials.installed.client_id;

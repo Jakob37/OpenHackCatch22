@@ -45,11 +45,16 @@ function generate_dummy_data(marker_count) {
     var longitude = center_lng + Math.random() * lng_diff * 2 - lng_diff / 2;
     var name = "Marker number" + i;
 
+    var minutes_since_submit = Math.random() * 120000;
+
     var point = {
       lat: latitude,
       lng: longitude,
       count: Math.random() + 0.5,
-      name: name
+      name: name,
+      water: 25,
+      address: "Luleå",
+      minutes_since_submit: minutes_since_submit
     };
 
     points.push(point);
