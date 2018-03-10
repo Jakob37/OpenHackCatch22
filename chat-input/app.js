@@ -26,8 +26,8 @@ app.get('/', function(req, res){
 app.get('/message', function(req, res){
 
     
-    console.log(req.query.from);
-    console.log(req.query.body);
+    console.log(req.params.from);
+    console.log(req.params.body);
     
     
     client.messages.create({
