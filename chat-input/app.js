@@ -118,6 +118,7 @@ app.post('/message', function(req, res){
       default:
 
     }
+    conversations[numberSender] = conv;
 
 });
 
