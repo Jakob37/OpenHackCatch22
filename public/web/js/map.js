@@ -1,5 +1,3 @@
-
-
 function setup_map() {
 
   var cape_town_coords = [-34.0, 18.523300];

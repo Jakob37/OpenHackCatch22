@@ -72,6 +72,15 @@
 
 <script src="js/map.js"></script>
 
+<script>
+  console.log("Perform GET request");
+  var my_data = "empty";
+  $.getJSON('http://127.0.0.1:8080/page/1', function(data) {
+    console.log("Received data: " + data);
+    my_data = data;
+  });
+</script>
+
 </body>
 
 </html>
