@@ -159,7 +159,7 @@ app.post('/message', function(req, res){
       case "getComment":
         conv.comment = dataSender;
         conv.state = "confirmData";
-        respond(numberSender,"Are your data correct? Y/N\n" + "Name :" + conv.name + "\nAddress :" + conv.address + "\nAmount : " + conv.amount + "\nComment : " + conv.comment, res);
+        respond(numberSender,"Are your data correct? Y/N\n" + "Name: " + conv.name + "\nAddress: " + conv.address + "\nAmount: " + conv.amount + "\nComment: " + conv.comment, res);
 
         break;
       case "confirmData":
