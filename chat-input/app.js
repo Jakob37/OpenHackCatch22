@@ -5,6 +5,15 @@ var router = express.Router();
 var http = require('http').Server(app);
 var app = express();
 
+var bodyParser = require('body-parser')
+
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
+
 var accountSid = process.env.twilioAccountSid;
 var authToken = process.env.twilioAuthToken;  
 
@@ -25,7 +34,8 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-router.post('/message', twilio.webhook({validate: false}), function(req, res){
+//router.post('/message', twilio.webhook({validate: false}), function(req, res){
+app.post('/message', function(req, res){
 
     console.log(req);
     console.log(req.body);
