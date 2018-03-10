@@ -1,12 +1,14 @@
 require('dotenv').config();
 var express = require('express');
+var twilio = require('twilio');
 var app = express();
+var router = app.Router();
 var http = require('http').Server(app);
 
 var accountSid = process.env.twilioAccountSid;
 var authToken = process.env.twilioAuthToken;  
 
-var twilio = require('twilio');
+
 var client = new twilio(accountSid, authToken);
 
 // client.messages.create({
@@ -23,10 +25,10 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/message', function(req, res){
+router.post('/message', twilio.webhook({validate: false}), function(req, res){
 
     console.log(req);
-
+    console.log(req.body);
     //console.log(req.body.From);
     //console.log(req.body.Body);
     
