@@ -104,16 +104,16 @@ function listMajors(auth) {
 
     last_generated_data = rows;
 
-    if (rows.length == 0) {
-      console.log('No data found.');
-    } else {
-      console.log('id\tdate\t\tname\t\tphone\t\taddress\t\tlatitude\tlongitude\tamount\tcomment');
-      for (var i = 0; i < rows.length; i++) {
-        var row = rows[i]; // Print columns A and E, which correspond to indices 0 and 4.
-        //document.write('%d\t%s\t%s\t%d\t%s\t%s\t%s\t%d\t%s', row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
-        console.log('%d\t%s\t%s\t%d\t%s\t%s\t%s\t%d\t%s', row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
-      }
-    }
+    // if (rows.length == 0) {
+    //   console.log('No data found.');
+    // } else {
+    //   console.log('id\tdate\t\tname\t\tphone\t\taddress\t\tlatitude\tlongitude\tamount\tcomment');
+    //   for (var i = 0; i < rows.length; i++) {
+    //     var row = rows[i]; // Print columns A and E, which correspond to indices 0 and 4.
+    //     //document.write('%d\t%s\t%s\t%d\t%s\t%s\t%s\t%d\t%s', row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
+    //     console.log('%d\t%s\t%s\t%d\t%s\t%s\t%s\t%d\t%s', row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]);
+    //   }
+    // }
   });
 }
 

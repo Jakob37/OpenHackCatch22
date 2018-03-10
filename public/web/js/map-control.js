@@ -73,8 +73,6 @@ function setup_data(datapoints) {
 
   for (var i = 0; i < datapoints.length; i++) {
     var point = datapoints[i];
-
-    console.log(point);
     try {
       var marker = add_marker(map_instance, point.lat, point.lng, point.name);
       marker.addTo(markerLayer);
@@ -108,7 +106,6 @@ setup_data(water_requests);
 
 function onMapZoomLevelChange(ev){
   var zoom_level = map_instance.getZoom();
-  console.log(zoom_level);
 
   if (zoom_level > 11) {
     if (map_instance.hasLayer(heatmapLayer)) {
