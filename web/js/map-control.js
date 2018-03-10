@@ -48,7 +48,7 @@ for (var i = 0; i < marker_count; i++) {
   var point = {
     lat: latitude,
     lng: longitude,
-    count: Math.random()
+    count: Math.random() + 0.5
   };
 
   var marker = add_marker(map_instance, latitude, longitude, name);
@@ -82,7 +82,7 @@ function onMapZoomLevelChange(ev){
   var zoom_level = map_instance.getZoom();
   console.log(zoom_level);
 
-  if (zoom_level > 10) {
+  if (zoom_level > 11) {
     if (map_instance.hasLayer(heatmapLayer)) {
       console.log('Removing heat layer');
       map_instance.removeLayer(heatmapLayer);
@@ -92,7 +92,7 @@ function onMapZoomLevelChange(ev){
       map_instance.addLayer(markerLayer);
     }
   }
-  else if (zoom_level <= 10) {
+  else if (zoom_level <= 11) {
     if (!map_instance.hasLayer(heatmapLayer)) {
       console.log('Adding heat layer');
       map_instance.addLayer(heatmapLayer);
