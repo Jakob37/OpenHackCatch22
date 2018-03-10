@@ -66,12 +66,24 @@ function setup_data(datapoints) {
 
   var markers = L.layerGroup();
 
+  // console.log(datapoints);
   for (var i = 0; i < datapoints.length; i++) {
     var point = datapoints[i];
-    var marker = add_marker(map_instance, point.lat, point.lng, point.name);
-    marker.addTo(markerLayer);
-  }
 
+    console.log(point);
+    try {
+      var marker = add_marker(map_instance, point.lat, point.lng, point.name);
+      marker.addTo(markerLayer);
+    }
+    catch (e) {
+      console.log("Failed parsing entry: " + point);
+    }
+  }
+}
+
+function clear_data() {
+  var markers = L.layerGroup();
+  markers.clearLayers();
 }
 
 var water_requests = generate_dummy_data(50);

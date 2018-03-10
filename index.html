@@ -91,18 +91,41 @@
   $("button").click(function(e) {
 
     $.getJSON( "/api", function( data ) {
-
       var parsed_data = JSON.parse(data);
+      var water_entries = [];
 
-      for (var i = 0; i < parsed_data.length; i++) {
-        var parsed_line = parsed_data[i];
-        console.log("Received data: " + parsed_line);
+//      var number_entries = parsed_data.length;
+      var number_entries = 50;
+
+      for (var i = 0; i < number_entries; i++) {
+        var line_fields = parsed_data[i];
+
+        if (line_fields !== undefined) {
+          var entry = {
+            id: line_fields[0],
+            date: line_fields[1],
+            name: line_fields[2],
+            code: line_fields[3],
+            address: line_fields[4],
+            lat: parseFloat(line_fields[5]),
+            lng: parseFloat(line_fields[6]),
+            amount: line_fields[7],
+            message: line_fields[8],
+            count: 1
+          };
+          water_entries.push(entry);
+        }
       }
+
+      clear_data();
+      setup_data(water_entries);
+
+      console.log(water_entries);
+//      setup_data()
+
     });
   });
 
 </script>
-
 </body>
-
 </html>
