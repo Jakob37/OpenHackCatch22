@@ -7,6 +7,7 @@ var http = require('http').Server(app);
 var {google} = require('googleapis');
 var sheets = google.sheets('v4');
 var googleAuth = require('./auth');
+var moment = require('moment');
 
 var conversations= {};
 
@@ -69,7 +70,7 @@ var writeToSheets = function(number, conv){
             "values":[
               [
                 "",
-                "", //time
+                conv.date, 
                 conv.name,
                 number,
                 conv.address,
@@ -118,7 +119,7 @@ app.post('/message', function(req, res){
         //TODO Check for info in database as well
           conversations[numberSender] = {
             state: "firstContact",
-            date: "",
+            date: moment().format('YYYYMMDDhhmm'),
             name: "",
             address: "",
             latitude: "",
