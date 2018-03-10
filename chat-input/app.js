@@ -1,6 +1,7 @@
 require('dotenv').config();
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
 
 var accountSid = process.env.twilioAccountSid;
 var authToken = process.env.twilioAuthToken;  
@@ -24,4 +25,8 @@ app.get('/', function(req, res){
 
 app.get('/message', function(req, res){
     res.sendFile(__dirname + '/message.html');
+});
+
+http.listen(3000, 100, "0.0.0.0", function(){
+    console.log('listening on *:3000');
 });
