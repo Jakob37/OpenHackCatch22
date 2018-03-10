@@ -38,6 +38,10 @@ body {
     margin-left: 20px;
 }
 
+#mapid {
+    height: 500px;
+}
+
 .text-dark {
     color: #364f6b;
 }
