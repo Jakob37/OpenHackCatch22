@@ -5,7 +5,7 @@
 - Password: same as wifi
 
 ## Google Script For Geocoding addresses
-https://github.com/nuket/google-sheets-geocoding-macro/blob/master/Code.gs
+http://willgeary.github.io/data/2016/11/04/Geocoding-with-Google-Sheets.html
 
 # Server debug
 
