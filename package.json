@@ -4,6 +4,7 @@
   "description": "cath22-chat-input",
   "dependencies": {
     "dotenv": "^5.0.1",
+    "express": "^4.15.2",
     "twilio": "^3.13.0"
   }
 }
