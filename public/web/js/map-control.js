@@ -29,33 +29,48 @@ map_instance.setView([cape_town_coords[0], cape_town_coords[1]], 9);
 var baseLayers = {
   "Streets": streets_map,
   "Satellite": satellite_map
+};
+
+function generate_dummy_data(marker_count) {
+
+  var center_lat = -34;
+  var center_lng = 18.5;
+  var lat_diff = 0.2;
+  var lng_diff = 0.2;
+  // var marker_count = 50;
+  points = [];
+
+  for (var i = 0; i < marker_count; i++) {
+    var latitude = center_lat + Math.random() * lat_diff * 2 - lat_diff / 2;
+    var longitude = center_lng + Math.random() * lng_diff * 2 - lng_diff / 2;
+    var name = "Marker number" + i;
+
+    var point = {
+      lat: latitude,
+      lng: longitude,
+      count: Math.random() + 0.5,
+      name: name
+    };
+
+    points.push(point);
+  }
+  return points;
 }
 
-var center_lat = -34;
-var center_lng = 18.5;
-var lat_diff = 0.2;
-var lng_diff = 0.2;
-var marker_count = 50;
+function setup_data(datapoints) {
 
-var points = [];
-var markers = L.layerGroup();
+  var markers = L.layerGroup();
 
-for (var i = 0; i < marker_count; i++) {
-  var latitude = center_lat + Math.random() * lat_diff * 2 - lat_diff / 2;
-  var longitude = center_lng + Math.random() * lng_diff * 2 - lng_diff / 2;
-  var name = "Marker number" + i;
+  for (var i = 0; i < datapoints.length; i++) {
+    var point = datapoints[i];
+    var marker = add_marker(map_instance, point.lat, point.lng, point.name);
+    marker.addTo(markerLayer);
+  }
 
-  var point = {
-    lat: latitude,
-    lng: longitude,
-    count: Math.random() + 0.5
-  };
-
-  var marker = add_marker(map_instance, latitude, longitude, name);
-  //console.log(marker);
-  points.push(point);
-  marker.addTo(markerLayer);
 }
+
+var water_requests = generate_dummy_data(50);
+setup_data(water_requests);
 
 
 var heatMapData = {
