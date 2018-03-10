@@ -4,6 +4,9 @@
 - User: catch22openhack2018@gmail.com
 - Password: same as wifi
 
+## Google Script For Geocoding addresses
+https://github.com/nuket/google-sheets-geocoding-macro/blob/master/Code.gs
+
 # Server debug
 
 Getting around googleAuth errors:
