@@ -59,6 +59,8 @@ app.post('/message', function(req, res){
     dataSender = req.body.Body;
     console.log(req.body.From);
     console.log(req.body.Body);
+    console.log(conversations);
+
 
     if(!(numberSender in conversations) && (dataSender.toLowerCase() == "help me")){
       //TODO Check for info in database as well
