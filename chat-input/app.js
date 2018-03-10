@@ -63,7 +63,7 @@ app.post('/message', function(req, res){
 
 
     if(!(numberSender in conversations)){
-      if(dataSender.toLowerCase().startsWith("help"){
+      if(dataSender.toLowerCase().startsWith("help")){
         //TODO Check for info in database as well
           conversations[numberSender] = {
             state: "firstContact",
