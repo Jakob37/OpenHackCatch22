@@ -73,6 +73,10 @@
   <div class="row">
     <div class="col-10">
       <h2 class="my-4 text-dark">Current information</h2>
+      <h2 class="my-4 text-dark">
+        Water requests: <span id="request_span">0</span>
+        Needed water: <span id="water_span">0</span> litres
+      </h2>
 
       <div id="mapid"></div>
       <button id="button">My button</button>
@@ -97,6 +101,7 @@
 //      var number_entries = parsed_data.length;
       var number_entries = 200;
 
+      var total_water = 0;
       for (var i = 0; i < number_entries; i++) {
         var line_fields = parsed_data[i];
 
@@ -109,20 +114,21 @@
             address: line_fields[4],
             lat: parseFloat(line_fields[5]),
             lng: parseFloat(line_fields[6]),
-            amount: line_fields[7],
+            amount: parseInt(line_fields[7]),
             message: line_fields[8],
             count: 1
           };
           water_entries.push(entry);
+
+          if (entry.amount > 0) {
+            total_water += entry.amount;
+          }
         }
       }
 
-//      clear_data();
       setup_data(water_entries);
-
-      console.log(water_entries);
-//      setup_data()
-
+      $("#request_span").text(water_entries.length);
+      $("#water_span").text(total_water);
     });
   });
 
