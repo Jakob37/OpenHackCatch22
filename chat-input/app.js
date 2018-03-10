@@ -34,6 +34,6 @@ app.get('/message', function(req, res){
     res.sendFile(__dirname + '/message.html');
 });
 
-http.listen(3000, 100, "0.0.0.0", function(){
+http.listen(process.env.PORT || 3000, function(){
     console.log('listening on *:3000');
 });
