@@ -47,7 +47,7 @@ var respond = function(toNumber, message, res){
    res.sendFile(__dirname + '/message.html');
 };
 
-var writeToSheets = function(number, conversation){
+var writeToSheets = function(number, conv){
   googleAuth.authorize()
   .then((auth) => {
 
@@ -69,7 +69,7 @@ var writeToSheets = function(number, conversation){
             "values":[
               [
                 "",
-                conv.date,
+                "", //time
                 conv.name,
                 number,
                 conv.address,
@@ -163,7 +163,8 @@ app.post('/message', function(req, res){
         break;
       case "confirmData":
         if (dataSender.toLowerCase().charAt(0) === "y"){
-          //Finish //TODO update date
+          writeToSheets(numberSender, conv)
+
           conv.state = "toDelete";
           respond(numberSender,"Your request has been handled", res);
           console.log("Success ! \n");
