@@ -129,7 +129,6 @@ const dummy_object = [{id:1, lat:10, lng:20}, {id:2, lat:10, lng:20}, {id:3, lat
 app.get("/api", function(req, res)  {
 
   var results_json = retrieve_data();
-
   res.json(results_json);
 });
 

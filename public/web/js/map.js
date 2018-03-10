@@ -61,13 +61,13 @@ var lat_diff = 0.2;
 var lng_diff = 0.2;
 var marker_count = 50;
 
-let markers = [];
+var markers = [];
 
 for (var i = 0; i < marker_count; i++) {
   var lat = center_lat + Math.random() * lat_diff * 2 - lat_diff / 2;
   var lng = center_lng + Math.random() * lng_diff * 2 - lng_diff / 2;
   var name = "Marker number" + i;
-  let marker = add_marker(map_instance, lat, lng, name);
+  var marker = add_marker(map_instance, lat, lng, name);
   markers.push(marker)
 }
 
