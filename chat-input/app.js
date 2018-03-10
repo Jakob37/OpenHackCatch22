@@ -4,6 +4,9 @@ var app = express();
 var twilio = require('twilio');
 var router = express.Router();
 var http = require('http').Server(app);
+var {google} = require('googleapis');
+var sheets = google.sheets('v4');
+var googleAuth = require('./auth');
 
 var conversations= {};
 
@@ -18,6 +21,8 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 
 var accountSid = process.env.twilioAccountSid;
 var authToken = process.env.twilioAuthToken;
+
+const SPREADSHEET_ID = process.env.SPREADSHEET_ID;
 
 
 var client = new twilio(accountSid, authToken);
@@ -42,6 +47,56 @@ var respond = function(toNumber, message, res){
    res.sendFile(__dirname + '/message.html');
 };
 
+var writeToSheets = function(number, conversation){
+  googleAuth.authorize()
+  .then((auth) => {
+
+      var request = {
+          // The ID of the spreadsheet to update.
+          spreadsheetId: '12VjDblmvSWincgitqPnHqLdIRKb6WNOLU2pU-_fZs24',
+      
+          // The A1 notation of a range to search for a logical table of data.
+          // Values will be appended after the last row of the table.
+          range: 'A2:I2',
+      
+          // How the input data should be interpreted.
+          valueInputOption: 'USER_ENTERED', 
+
+          // How the input data should be inserted.
+          insertDataOption: 'INSERT_ROWS', 
+      
+          resource: {
+            "values":[
+              [
+                "",
+                conv.date,
+                conv.name,
+                number,
+                conv.address,
+                "", // latitude
+                "", // longitude
+                conv.amount,
+                conv.comment
+              ]
+            ]
+          },
+      
+          auth: auth,
+        };
+      
+        sheets.spreadsheets.values.append(request, function(err, response) {
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          console.log(response);        
+      })
+  })
+  .catch((err) => {
+      console.log('auth error', err);
+  });
+};
 
 
 app.use(express.static(__dirname + '/public'));
