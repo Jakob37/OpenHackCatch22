@@ -14,17 +14,7 @@ var satellite_map = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y
   accessToken: mapbox_access_token
 });
 
-var heatmapLayer = new HeatmapOverlay(cfg);
-var markerLayer = L.layerGroup();
-
-var map_instance = L.map('mapid', {
-  zoom: 13,
-  layers: [streets_map, heatmapLayer, markerLayer]
-});
-
 var cape_town_coords = [-34.0, 18.523300];
-map_instance.setView([cape_town_coords[0], cape_town_coords[1]], 9);
-
 
 var baseLayers = {
   "Streets": streets_map,
@@ -38,7 +28,7 @@ function generate_dummy_data(marker_count) {
   var lat_diff = 0.2;
   var lng_diff = 0.2;
   // var marker_count = 50;
-  points = [];
+  var points = [];
 
   for (var i = 0; i < marker_count; i++) {
     var latitude = center_lat + Math.random() * lat_diff * 2 - lat_diff / 2;
@@ -48,6 +38,7 @@ function generate_dummy_data(marker_count) {
     var minutes_since_submit = Math.random() * 120000;
 
     var point = {
+      id: i,
       lat: latitude,
       lng: longitude,
       count: Math.random() + 0.5,
@@ -62,11 +53,24 @@ function generate_dummy_data(marker_count) {
   return points;
 }
 
+var heatmapLayer;
+var markerLayer;
+var map_instance;
+
 function setup_data(datapoints) {
 
-  var markers = L.layerGroup();
+  heatmapLayer = new HeatmapOverlay(cfg);
+  markerLayer = L.layerGroup();
 
-  // console.log(datapoints);
+  if (map_instance !== undefined) {
+    map_instance.remove();
+  }
+  map_instance = L.map('mapid', {
+    zoom: 13,
+    layers: [streets_map, heatmapLayer, markerLayer]
+  });
+  map_instance.setView([cape_town_coords[0], cape_town_coords[1]], 9);
+
   for (var i = 0; i < datapoints.length; i++) {
     var point = datapoints[i];
 
@@ -74,41 +78,33 @@ function setup_data(datapoints) {
     try {
       var marker = add_marker(map_instance, point.lat, point.lng, point.name);
       marker.addTo(markerLayer);
+      marker.point = point;
     }
     catch (e) {
       console.log("Failed parsing entry: " + point);
     }
   }
-}
 
-function clear_data() {
-  var markers = L.layerGroup();
-  markers.clearLayers();
+  var heatMapData = {
+    max: 2,
+    min: 0,
+    data: datapoints
+  };
+
+  var overlayMaps = {
+    "Heatmap" : heatmapLayer,
+    "Markers" : markerLayer
+  };
+
+  L.control.layers(baseLayers, overlayMaps).addTo(map_instance);
+  heatmapLayer.setData(heatMapData);
+  map_instance.on("zoomstart zoom zoomend", onMapZoomLevelChange);
+
+  onMapZoomLevelChange();
 }
 
 var water_requests = generate_dummy_data(50);
 setup_data(water_requests);
-
-
-var heatMapData = {
-  max: 2,
-  min: 0,
-  data: points
-};
-
-var overlayMaps = {
-  "Heatmap" : heatmapLayer,
-  "Markers" : markerLayer
-};
-
-L.control.layers(baseLayers, overlayMaps).addTo(map_instance);
-
-heatmapLayer.setData(heatMapData);
-
-console.log(map_instance.getZoom());
-onMapZoomLevelChange();
-
-map_instance.on("zoomstart zoom zoomend", onMapZoomLevelChange)
 
 function onMapZoomLevelChange(ev){
   var zoom_level = map_instance.getZoom();
