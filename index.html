@@ -92,14 +92,14 @@
 <script type="text/javascript" src="web/js/map-control.js"></script>
 
 <script>
-  $("button").click(function(e) {
 
+  function load_data_from_spreadsheet() {
     $.getJSON( "/api", function( data ) {
       var parsed_data = JSON.parse(data);
       var water_entries = [];
 
 //      var number_entries = parsed_data.length;
-      var number_entries = 200;
+      var number_entries = 126;
 
       var total_water = 0;
       for (var i = 0; i < number_entries; i++) {
@@ -130,7 +130,11 @@
       $("#request_span").text(water_entries.length);
       $("#water_span").text(total_water);
     });
-  });
+  }
+
+
+  $("button").click(load_data_from_spreadsheet);
+  load_data_from_spreadsheet();
 
 </script>
 </body>

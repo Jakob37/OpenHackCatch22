@@ -57,7 +57,7 @@ var heatmapLayer;
 var markerLayer;
 var map_instance;
 
-function setup_data(datapoints) {
+function setup_data(water_requests) {
 
   heatmapLayer = new HeatmapOverlay(cfg);
   markerLayer = L.layerGroup();
@@ -69,24 +69,27 @@ function setup_data(datapoints) {
     zoom: 13,
     layers: [streets_map, heatmapLayer, markerLayer]
   });
-  map_instance.setView([cape_town_coords[0], cape_town_coords[1]], 9);
 
-  for (var i = 0; i < datapoints.length; i++) {
-    var point = datapoints[i];
+  var default_zoom = 12;
+  map_instance.setView([cape_town_coords[0], cape_town_coords[1]], default_zoom);
+
+  for (var i = 0; i < water_requests.length; i++) {
+    var water_request = water_requests[i];
     try {
-      var marker = add_marker(map_instance, point.lat, point.lng, point.name);
+      var marker = add_marker(map_instance, water_request);
+      // var marker = add_marker(map_instance, point.lat, point.lng, point.name);
       marker.addTo(markerLayer);
-      marker.point = point;
+      marker.point = water_request;
     }
     catch (e) {
-      console.log("Failed parsing entry: " + point);
+      console.log("Failed parsing entry: " + water_request);
     }
   }
 
   var heatMapData = {
     max: 2,
     min: 0,
-    data: datapoints
+    data: water_requests
   };
 
   var overlayMaps = {
@@ -101,8 +104,8 @@ function setup_data(datapoints) {
   onMapZoomLevelChange();
 }
 
-var water_requests = generate_dummy_data(50);
-setup_data(water_requests);
+// var water_requests = generate_dummy_data(50);
+// setup_data(water_requests);
 
 function onMapZoomLevelChange(ev){
   var zoom_level = map_instance.getZoom();
