@@ -25,9 +25,10 @@ app.get('/', function(req, res){
 
 app.post('/message', function(req, res){
 
-    
-    console.log(req.body.From);
-    console.log(req.body.Body);
+    console.log(req);
+
+    //console.log(req.body.From);
+    //console.log(req.body.Body);
     
     
     client.messages.create({
