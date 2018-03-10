@@ -38,10 +38,10 @@ app.get('/', function(req, res){
 //router.post('/message', twilio.webhook({validate: false}), function(req, res){
 app.post('/message', function(req, res){
 
-    console.log(req);
-    console.log(req.body);
-    //console.log(req.body.From);
-    //console.log(req.body.Body);
+
+    //console.log(req.body);
+    console.log(req.body.From);
+    console.log(req.body.Body);
     
     
     client.messages.create({
