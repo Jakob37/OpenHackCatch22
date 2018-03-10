@@ -119,7 +119,7 @@ app.post('/message', function(req, res){
         //TODO Check for info in database as well
           conversations[numberSender] = {
             state: "firstContact",
-            date: moment().format('YYYYMMDDhhmm'),
+            date: moment().format('YYYYMMDDHHmm'),
             name: "",
             address: "",
             latitude: "",
