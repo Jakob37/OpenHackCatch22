@@ -62,22 +62,25 @@ app.post('/message', function(req, res){
     console.log(conversations);
 
 
-    if(!(numberSender in conversations) && (dataSender.toLowerCase() == "help me")){
-      //TODO Check for info in database as well
-        conversations[numberSender] = {
-          state: "firstContact",
-          date: "",
-          name: "",
-          address: "",
-          latitude: "",
-          longitude: "",
-          amount: "",
-          comment: ""
-        }
-    } else {
-      respond(numberSender, 'Please send "Help me"| "Help" ', res);
-      return;
+    if(!(numberSender in conversations)){
+      if(dataSender.toLowerCase() == "help me"){
+        //TODO Check for info in database as well
+          conversations[numberSender] = {
+            state: "firstContact",
+            date: "",
+            name: "",
+            address: "",
+            latitude: "",
+            longitude: "",
+            amount: "",
+            comment: ""
+         }
+      } else {
+        respond(numberSender, 'Please send "Help me"| "Help" ', res);
+        return;
+      }
     }
+
 
     conv = conversations[numberSender];
 
