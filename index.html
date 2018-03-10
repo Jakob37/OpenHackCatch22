@@ -11,19 +11,19 @@
   <title>Catch22 Water Challenge</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
 
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/style.css" type="text/css" rel="stylesheet">
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/popper/popper.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/popper/popper.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <!-- Leaflet.js -->
+  <!--&lt;!&ndash; Leaflet.js &ndash;&gt;-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
         integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
         crossorigin=""/>
@@ -49,7 +49,7 @@
           <a class="nav-link text-light" href="index.html">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="about.html">About</a>
+          <a class="nav-link text-light" href="public/web/about.html">About</a>
         </li>
       </ul>
     </div>
@@ -70,15 +70,24 @@
 </div>
 <!-- /.container -->
 
-<script src="js/map.js"></script>
+<script src="web/js/map.js"></script>
 
 <script>
   console.log("Perform GET request");
-  var my_data = "empty";
-  $.getJSON('http://127.0.0.1:8080/page/1', function(data) {
-    console.log("Received data: " + data);
-    my_data = data;
+  $.getJSON( "/api", function( data ) {
+
+    console.log(data);
+    var items = [];
+    $.each(data, function(i, obj) {
+      items.push("<li>" + obj.id + obj.lat + obj.lng + "</li>");
+    });
+
+    $( "<ul/>", {
+      "class": "my-new-list",
+      html: items.join( "" )
+    }).appendTo( "body" );
   });
+
 </script>
 
 </body>
