@@ -200,6 +200,25 @@ app.post('/confirmation', function(req, res){
   if(number !== null){
     respond(number, "Help is on its way.", res);
   }
+  res.send('<h1>success</h1>');
+  //res.sendFile(__dirname + '/index.html');
+});
+
+app.post('/addRequest', function(req, res){
+  console.log("addRequest:");
+  console.log(req.body);
+
+  var request = {
+    date: moment().format('YYYYMMDDHHmm'),
+    name: req.body,
+    address: req.body.address,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    amount: req.body.amount,
+    comment: req.body.comment
+ }
+
+//Todo: add in database.
   res.sendFile(__dirname + '/index.html');
 });
 
