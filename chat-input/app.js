@@ -23,7 +23,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/message', function(req, res){
+app.post('/message', function(req, res){
 
     
     console.log(req.body.From);
