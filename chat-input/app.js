@@ -63,7 +63,7 @@ app.post('/message', function(req, res){
 
 
     if(!(numberSender in conversations)){
-      if(dataSender.toLowerCase() == "help me"){
+      if(dataSender.toLowerCase().startsWith("help"){
         //TODO Check for info in database as well
           conversations[numberSender] = {
             state: "firstContact",
@@ -111,8 +111,9 @@ app.post('/message', function(req, res){
 
         break;
       case "confirmData":
-        if (dataSender.charAt(0).toLowerCase == "y"){
+        if (dataSender.toLowerCase().charAt(0) === "y"){
           //Finish //TODO update date
+          console.log("Success ! \n");
         }
         else {
           conv.state = "getName";
