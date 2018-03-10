@@ -15,10 +15,11 @@ var satellite_map = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y
 });
 
 var heatmapLayer = new HeatmapOverlay(cfg);
+var markerLayer = L.layerGroup();
 
 var map_instance = L.map('mapid', {
   zoom: 13,
-  layers: [streets_map, heatmapLayer]
+  layers: [streets_map, heatmapLayer, markerLayer]
 });
 
 var cape_town_coords = [-34.0, 18.523300];
@@ -53,23 +54,52 @@ for (var i = 0; i < marker_count; i++) {
   var marker = add_marker(map_instance, latitude, longitude, name);
   //console.log(marker);
   points.push(point);
-  marker.addTo(markers);
+  marker.addTo(markerLayer);
 }
 
+
 var heatMapData = {
-  max: 1.5,
+  max: 2,
   min: 0,
   data: points
 };
 
-console.log(points);
-
 var overlayMaps = {
   "Heatmap" : heatmapLayer,
-  "Markers" : markers
-
+  "Markers" : markerLayer
 };
 
 L.control.layers(baseLayers, overlayMaps).addTo(map_instance);
 
 heatmapLayer.setData(heatMapData);
+
+console.log(map_instance.getZoom());
+onMapZoomLevelChange();
+
+map_instance.on("zoomstart zoom zoomend", onMapZoomLevelChange)
+
+function onMapZoomLevelChange(ev){
+  var zoom_level = map_instance.getZoom();
+  console.log(zoom_level);
+
+  if (zoom_level > 10) {
+    if (map_instance.hasLayer(heatmapLayer)) {
+      console.log('Removing heat layer');
+      map_instance.removeLayer(heatmapLayer);
+    }
+    if (!map_instance.hasLayer(markerLayer)) {
+      console.log('Adding marker layer');
+      map_instance.addLayer(markerLayer);
+    }
+  }
+  else if (zoom_level <= 10) {
+    if (!map_instance.hasLayer(heatmapLayer)) {
+      console.log('Adding heat layer');
+      map_instance.addLayer(heatmapLayer);
+    }
+    if (map_instance.hasLayer(markerLayer)) {
+      console.log('Removing marker layer');
+      map_instance.removeLayer(markerLayer);
+    }
+  }
+}
