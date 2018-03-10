@@ -1,7 +1,3 @@
-var express = require('express');
-var app = express();
-var path = require('path');
-const request = require('request');
 
 var http = require('http');
 
@@ -16,8 +12,6 @@ var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
   process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
-var last_generated_data = {empty:"No data generated yet"};
-
 function retrieve_data() {
 
   // Load client secrets from a local file.
@@ -30,8 +24,6 @@ function retrieve_data() {
     // Google Sheets API.
     authorize(JSON.parse(content), listMajors);
   });
-
-  return JSON.stringify(last_generated_data);
 }
 function authorize(credentials, callback) {
   var clientSecret = credentials.installed.client_secret;
@@ -100,9 +92,6 @@ function listMajors(auth) {
       return;
     }
     var rows = response.values;
-
-    last_generated_data = rows;
-
     if (rows.length == 0) {
       console.log('No data found.');
     } else {
@@ -116,25 +105,8 @@ function listMajors(auth) {
   });
 }
 
-// Server stuff starts here //
+retrieve_data();
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
-
-const dummy_object = [{id:1, lat:10, lng:20}, {id:2, lat:10, lng:20}, {id:3, lat:10, lng:20}];
-
-app.get("/api", function(req, res)  {
-
-  var results_json = retrieve_data();
-
-  res.json(results_json);
-});
-
-
-app.listen(8080);
-
-
-
+module.exports = {
+  retrieve_data: retrieve_data
+};

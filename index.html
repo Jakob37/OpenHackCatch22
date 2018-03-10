@@ -64,6 +64,7 @@
       <h2 class="my-4 text-dark">Current information</h2>
 
       <div id="mapid">DIV</div>
+      <button id="button">My button</button>
     </div>
   </div>
 
@@ -73,19 +74,17 @@
 <script src="web/js/map.js"></script>
 
 <script>
-  console.log("Perform GET request");
-  $.getJSON( "/api", function( data ) {
+  $("button").click(function(e) {
 
-    console.log(data);
-    var items = [];
-    $.each(data, function(i, obj) {
-      items.push("<li>" + obj.id + obj.lat + obj.lng + "</li>");
+    $.getJSON( "/api", function( data ) {
+
+      var parsed_data = JSON.parse(data);
+
+      for (var i = 0; i < parsed_data.length; i++) {
+        var parsed_line = parsed_data[i];
+        console.log("Received data: " + parsed_line);
+      }
     });
-
-    $( "<ul/>", {
-      "class": "my-new-list",
-      html: items.join( "" )
-    }).appendTo( "body" );
   });
 
 </script>
