@@ -1,9 +1,9 @@
 require('dotenv').config();
 var express = require('express');
 var twilio = require('twilio');
-var app = express();
-var router = app.Router();
+var router = express.Router();
 var http = require('http').Server(app);
+var app = express();
 
 var accountSid = process.env.twilioAccountSid;
 var authToken = process.env.twilioAuthToken;  
