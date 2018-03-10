@@ -24,6 +24,9 @@ app.get('/', function(req, res){
 });
 
 app.get('/message', function(req, res){
+
+    console.log(req);
+    
     client.messages.create({
         body: 'Your message was received.',
         to: '+46703209169',  // Text this number
