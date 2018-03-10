@@ -113,6 +113,8 @@ app.post('/message', function(req, res){
       case "confirmData":
         if (dataSender.toLowerCase().charAt(0) === "y"){
           //Finish //TODO update date
+          conv.state = "toDelete";
+          respond(numberSender,"Your request has been handled", res);
           console.log("Success ! \n");
         }
         else {
@@ -124,7 +126,14 @@ app.post('/message', function(req, res){
       default:
 
     }
-    conversations[numberSender] = conv;
+
+    if (conv.state === "toDelete"){
+      delete conversations[numberSender];
+    } else{
+        conversations[numberSender] = conv;
+    }
+
+
 
 });
 
