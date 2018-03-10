@@ -25,7 +25,7 @@ app.get('/', function(req, res){
 
 app.get('/message', function(req, res){
     client.messages.create({
-        body: 'Hello from Node',
+        body: 'Your message was received.',
         to: '+46703209169',  // Text this number
         from: '+46769439389' // From a valid Twilio number
     })
