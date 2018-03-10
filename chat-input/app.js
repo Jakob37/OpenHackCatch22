@@ -31,7 +31,7 @@ var client = new twilio(accountSid, authToken);
 
 
 
-var respond = function(toNumber, message){
+var respond = function(toNumber, message, res){
   client.messages.create({
       body: message,
       to: toNumber,  // Text this number
@@ -73,7 +73,8 @@ app.post('/message', function(req, res){
           comment: ""
         }
     } else {
-      respond(numberSender, 'Please send "Help me"| "Help" ');
+      respond(numberSender, 'Please send "Help me"| "Help" ', res);
+      return;
     }
 
     conv = conversations[numberSender];
@@ -81,27 +82,27 @@ app.post('/message', function(req, res){
     switch (conv.state) {
       case "firstContact":
         conv.state = "getName";
-        respond(numberSender, "What is your name?");
+        respond(numberSender, "What is your name?", res);
         break;
       case "getName":
         conv.name = dataSender;
         conv.state = "getAddress";
-        respond(numberSender, "What is your address?");
+        respond(numberSender, "What is your address?", res);
         break;
       case "getAddress":
         conv.address = dataSender;
         conv.state = "getAmount";
-        respond(numberSender,"For how many people do you need water?");
+        respond(numberSender,"For how many people do you need water?", res);
         break;
       case "getAmount":
         conv.amount = dataSender;
         conv.state = "getComment";
-        respond(numberSender,"Any special comment?");
+        respond(numberSender,"Any special comment?", res);
         break;
       case "getComment":
         conv.comment = dataSender;
         conv.state = "confirmData";
-        respond(numberSender,"Are your data correct? Y/N\n" + "Name :" + conv.name + "\nAddress :" + conv.address + "\nAmount : " + conv.amount + "\nComment : " + conv.comment);
+        respond(numberSender,"Are your data correct? Y/N\n" + "Name :" + conv.name + "\nAddress :" + conv.address + "\nAmount : " + conv.amount + "\nComment : " + conv.comment, res);
 
         break;
       case "confirmData":
@@ -110,7 +111,7 @@ app.post('/message', function(req, res){
         }
         else {
           conv.state = "getName";
-          respond(numberSender, "What is your name?");
+          respond(numberSender, "What is your name?", res);
         }
 
         break;
@@ -118,16 +119,6 @@ app.post('/message', function(req, res){
 
     }
 
-
-
-    client.messages.create({
-        body: 'Your message was received.',
-        to: '+46703209169',  // Text this number
-        from: '+46769439389' // From a valid Twilio number
-    })
-    .then((message) => console.log(message.sid));
-
-    res.sendFile(__dirname + '/message.html');
 });
 
 http.listen(process.env.PORT || 3000, function(){
