@@ -134,12 +134,15 @@ app.post('/message', function(req, res){
 });
 
 app.post('/confirmation', function(req, res){
-  number = req.body.number;
+  
 
   console.log("Confirmation is being sent to:");
   console.log(req.body);
 
-  respond(number, "Help is on its way.", res);
+  number = req.body.number;
+  if(number !== null){
+    respond(number, "Help is on its way.", res);
+  }
   res.sendFile(__dirname + '/index.html');
 });
 
