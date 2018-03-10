@@ -1,5 +1,4 @@
 
-
 function add_marker(map_instance, water_request) {
 
   var id = water_request.id;
@@ -29,16 +28,24 @@ function add_marker(map_instance, water_request) {
 
 function test_function(id) {
   console.log("Clicked ID: " + id);
+
+  for (var i = 0; i < water_requests.length; i++) {
+    var request = water_requests[i];
+    current_request = request;
+    if (request.id == id) {
+      console.log("hmm");
+      generate_popup(request);
+      return;
+    }
+  }
+  console.log("Error! No request found!")
 }
 
-// function add_marker(map_instance, lat, lng, info) {
-//   var blueMarker = L.AwesomeMarkers.icon({
-//     icon: 'ion-waterdrop',
-//     markerColor: 'blue',
-//     prefix: 'ion'
-//   });
-//
-//   var marker = L.marker([lat, lng], {icon: blueMarker}).addTo(map_instance);
-//   marker.bindPopup(info);
-//   return marker;
-// }
+function generate_popup(water_request) {
+  console.log("Generate popup for: " + water_request);
+
+  $("#modal_name").text(water_request.name);
+  $("#modal_address").text(water_request.address);
+  $("#exampleModal").modal();
+}
+

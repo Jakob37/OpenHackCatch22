@@ -18,6 +18,8 @@ var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
 var last_generated_data = {empty:"No data generated yet"};
 
+
+
 function retrieve_data() {
 
   // Load client secrets from a local file.
@@ -132,6 +134,12 @@ app.get("/api", function(req, res)  {
   var results_json = retrieve_data();
   res.json(results_json);
 });
+
+
+
+
+
+
 
 
 app.listen(8080);
