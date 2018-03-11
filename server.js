@@ -127,6 +127,10 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/stats.html', function(req, res) {
+  res.sendFile(__dirname + '/stats.html');
+});
+
 const dummy_object = [{id:1, lat:10, lng:20}, {id:2, lat:10, lng:20}, {id:3, lat:10, lng:20}];
 
 app.get("/api", function(req, res)  {
