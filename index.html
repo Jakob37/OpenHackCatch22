@@ -68,20 +68,18 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container-fluid">
 
   <div class="row">
-    <div class="col-10">
+    <div class="col">
       <h2 class="my-4 text-dark">
-        Water requests: <span id="request_span">0</span>
+        Water requests: <span id="request_span">0</span>,
         Needed water: <span id="water_span">0</span> litres
       </h2>
 
       <div id="mapid"></div>
-      <button id="button">My button</button>
     </div>
   </div>
-
 </div>
 <!-- /.container -->
 
@@ -126,8 +124,8 @@
       var parsed_data = JSON.parse(data);
       water_requests = [];
 
-//      var number_entries = parsed_data.length;
-      var number_entries = 126;
+      var number_entries = parsed_data.length;
+//      var number_entries = 126;
 
       var total_water = 0;
       for (var i = 0; i < number_entries; i++) {

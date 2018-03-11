@@ -33,7 +33,10 @@ body {
 }
 
 #mapid {
-    height: 700px;
+    /*width: 1500px;*/
+    /*height: 1000px;*/
+    height: 80vh;
+
 }
 
 .text-dark {
@@ -43,3 +46,4 @@ body {
 .list-item {
     background-color: #fbfbfb;
 }
+

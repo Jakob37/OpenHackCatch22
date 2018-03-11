@@ -30,7 +30,7 @@ function add_marker(map_instance, water_request) {
   var current_date = new Date();
 
   var time_difference = (current_date - water_date)/1000/60/60;
-console.log(time_difference);
+// console.log(time_difference);
   if (time_difference > 33) {
     var marker = L.marker([lat, lng], {icon: redMarker}).addTo(map_instance);
   }
