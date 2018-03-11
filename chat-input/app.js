@@ -219,17 +219,16 @@ app.post('/addRequest', function(req, res){
 
   var request = {
     date: moment().format('YYYYMMDDHHmm'),
-    name: req.body,
+    name: req.body.name,
     address: req.body.address,
     latitude: req.body.latitude,
     longitude: req.body.longitude,
     amount: req.body.amount,
     comment: req.body.comment
- }
+  };
 
- console.log(request);
+  writeToSheets(req.body.number, request);
 
-//Todo: add in database.
   res.send('<h1>success</h1>');
 });
 
