@@ -119,6 +119,15 @@
   var water_requests;
   var current_request;   // sorry about globality :(
 
+  function is_complete(line_fields)  {
+    if (line_fields[5] !== "" && line_fields[6] !== "") {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   function load_data_from_spreadsheet() {
     $.getJSON( "/api", function( data ) {
       var parsed_data = JSON.parse(data);
@@ -131,7 +140,10 @@
       for (var i = 0; i < number_entries; i++) {
         var line_fields = parsed_data[i];
 
-        if (line_fields !== undefined) {
+
+        var valid_fields = is_complete(line_fields);
+
+        if (valid_fields) {
           var entry = {
             id: line_fields[0],
             date: line_fields[1],
@@ -162,21 +174,12 @@
   function submit_water_request() {
 
     var phone_number = current_request.number;
-//
-//    var options = { method: 'POST',
-//      url: 'https://openhack-catch22.herokuapp.com/confirmation',
-//      headers:
-//        { 'postman-token': '0e7b3b6f-283b-0184-6232-606b4a170971',
-//          'cache-control': 'no-cache',
-//          'content-type': 'application/json' },
-//      body: { number: phone_number },
-//      json: true };
 
 
     $.ajax({
       type: "POST",
       url: 'https://openhack-catch22.herokuapp.com/confirmation',
-      data: { number: "0730691659" },
+      data: { number: phone_number },
       dataType: 'application/json'
     });
 
