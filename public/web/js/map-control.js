@@ -59,6 +59,8 @@ var map_instance;
 
 function setup_data(water_requests) {
 
+  console.log("Setup data run");
+
   heatmapLayer = new HeatmapOverlay(cfg);
   markerLayer = L.layerGroup();
 
@@ -70,7 +72,7 @@ function setup_data(water_requests) {
     layers: [streets_map, heatmapLayer, markerLayer]
   });
 
-  var default_zoom = 12;
+  var default_zoom = 11;
   map_instance.setView([cape_town_coords[0], cape_town_coords[1]], default_zoom);
 
   for (var i = 0; i < water_requests.length; i++) {

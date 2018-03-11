@@ -1,5 +1,31 @@
-function onEdit() {
+// Function that updates the row number and the geolocation from address.
+function Update() {
+  Logger.log('Update Start..');
+  Logger.log('Updating new row ID.');
+  addId();
+  Logger.log('Updating new row GPS.');
   addressToPosition();
+  Logger.log('..Update Done.');
+}
+
+// Needs to be run manually once to install the trigger
+ function onChange(e) {
+var ss = SpreadsheetApp.getActive();
+ScriptApp.newTrigger('Update')
+.forSpreadsheet(ss)
+.onChange()
+.create();
+}
+
+function addId() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('requests');
+  var cells = sheet.getRange("requests!A:A");
+  var lastRow = sheet.getLastRow();
+  
+  //Logger.log(cells.getCell(lastRow, 1).isBlank() + 'lastRow:' + lastRow);
+  if(cells.getCell(lastRow, 1).isBlank()) {
+      cells.getCell(lastRow, 1).setValue(cells.getCell(lastRow-1, 1).getValue()+1);
+  }
 }
 
 function getGeocodingRegion() {
@@ -23,6 +49,8 @@ function addressToPosition() {
   var geocoder = Maps.newGeocoder().setRegion(getGeocodingRegion());
   var location;
   var townName = 'Cape Town';
+  
+  Logger.log('Updating geolocation for row ' + lastRow);
   
   for (addressRow = 1; addressRow < lastRow; ++addressRow) {
     
