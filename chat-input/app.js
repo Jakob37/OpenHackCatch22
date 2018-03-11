@@ -158,7 +158,7 @@ app.post('/message', function(req, res){
       case "getAddress":
         conv.address = dataSender;
         conv.state = "getAmount";
-        respond(numberSender,"For how many people do you need water?", res);
+        respond(numberSender,"For how many people do you need water every day?", res);
         break;
       case "getAmount":
         conv.amount = dataSender;
@@ -199,9 +199,8 @@ app.post('/message', function(req, res){
 
 });
 
-app.post('/confirmation', function(req, res){
-  
 
+app.post('/confirmation', function(req, res){
   console.log("Confirmation is being sent to:");
   console.log(req.body);
 
@@ -212,6 +211,7 @@ app.post('/confirmation', function(req, res){
   res.send('<h1>success</h1>');
   //res.sendFile(__dirname + '/index.html');
 });
+
 
 app.post('/addRequest', function(req, res){
   console.log("addRequest:");
@@ -227,8 +227,10 @@ app.post('/addRequest', function(req, res){
     comment: req.body.comment
  }
 
+ console.log(request);
+
 //Todo: add in database.
-  res.sendFile(__dirname + '/index.html');
+  res.send('<h1>success</h1>');
 });
 
 http.listen(process.env.PORT || 3000, function(){
