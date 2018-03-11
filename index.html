@@ -102,18 +102,28 @@
         <p><b>Address:</b> <span id="modal_address"></span></p>
       </div>
       <div class="modal-footer">
-        <button type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-        >
-          Cancel
-        </button>
-        <button type="button" class="btn btn-success"
-                onclick="submit_water_request()"
-                data-dismiss="modal"
-        >
-          Confirm
-        </button>
+
+        <input type="button" class="btn" value="Cancel" data-dismiss="modal"/>
+        <input type="button"
+               onclick="submit_water_request()"
+               class="btn btn-success"
+               value="Confirm"
+               data-dismiss="modal"/>
+
+        <!--<button type="button"-->
+                <!--class="btn btn-secondary"-->
+                <!--data-dismiss="modal"-->
+        <!--&gt;-->
+          <!--Cancel-->
+        <!--</button>-->
+
+        <!--<button type="button"-->
+                <!--class="btn btn-success"-->
+                <!--onclick="submit_water_request()"-->
+                <!--data-dismiss="modal"-->
+        <!--&gt;-->
+          <!--Confirm-->
+        <!--</button>-->
       </div>
     </div>
   </div>
@@ -129,12 +139,14 @@
         </button>
       </div>
       <div class="modal-footer">
-        <button type="button"
-                class="btn btn-success"
-                data-dismiss="modal"
-        >
-          OK!
-        </button>
+        <input type="button" class="btn btn-success" value="OK!" data-dismiss="modal"/>
+
+        <!--<button type="button"-->
+                <!--class="btn btn-success"-->
+                <!--data-dismiss="modal"-->
+        <!--&gt;-->
+          <!--OK!-->
+        <!--</button>-->
       </div>
     </div>
   </div>
@@ -161,12 +173,15 @@
   }
 
   function load_data_from_spreadsheet() {
+
+    console.log("Load data from spreadsheet");
+
     $.getJSON( "/api", function( data ) {
       var parsed_data = JSON.parse(data);
       water_requests = [];
 
-//      var number_entries = parsed_data.length;
-      var number_entries = 120;
+      var number_entries = parsed_data.length;
+//      var number_entries = 120;
 
       var total_water = 0;
       for (var i = 0; i < number_entries; i++) {
@@ -194,6 +209,9 @@
             total_water += entry.amount;
           }
         }
+        else {
+          console.log("Invalid entry: " + line_fields);
+        }
       }
 
       setup_data(water_requests);
@@ -205,6 +223,8 @@
   function submit_water_request() {
 
     var phone_number = current_request.number;
+
+    console.log("Sending water request");
 
     $.ajax({
       type: "POST",
@@ -223,6 +243,12 @@
     }
     modal_confirmed = false;
   });
+
+//  $("#exampleModal").on("click", function(e) {
+//    e.preventDefault();
+//
+//    // the rest of your code ...
+//  });
 
   $("button").click(load_data_from_spreadsheet);
   load_data_from_spreadsheet();

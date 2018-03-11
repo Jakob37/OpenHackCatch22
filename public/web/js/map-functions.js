@@ -31,7 +31,7 @@ function add_marker(map_instance, water_request) {
 
   var time_difference = (current_date - water_date)/1000/60/60;
 // console.log(time_difference);
-  if (time_difference > 33) {
+  if (time_difference > 35.5) {
     var marker = L.marker([lat, lng], {icon: redMarker}).addTo(map_instance);
   }
   else {
@@ -39,7 +39,7 @@ function add_marker(map_instance, water_request) {
   }
 
   var popup_text = name + "<br>" + address + "<br> Water amount: " + amount +
-    "<br><br><button type='button' class='btn btn-danger' onclick='test_function(" + id + ")'>" +
+    " litres<br><br><button type='button' class='btn btn-danger' onclick='test_function(" + id + ")'>" +
     "Take action!</button>";
 
   marker.bindPopup(popup_text);
