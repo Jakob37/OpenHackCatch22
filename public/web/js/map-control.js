@@ -76,8 +76,9 @@ function setup_data(water_requests) {
   for (var i = 0; i < water_requests.length; i++) {
     var water_request = water_requests[i];
     try {
+
       var marker = add_marker(map_instance, water_request);
-      // var marker = add_marker(map_instance, point.lat, point.lng, point.name);
+
       marker.addTo(markerLayer);
       marker.point = water_request;
     }

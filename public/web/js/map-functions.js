@@ -1,3 +1,14 @@
+var blueMarker = L.AwesomeMarkers.icon({
+  icon: 'ion-waterdrop',
+  markerColor: 'blue',
+  prefix: 'ion'
+});
+
+var redMarker = L.AwesomeMarkers.icon({
+  icon: 'ion-waterdrop',
+  markerColor: 'red',
+  prefix: 'ion'
+});
 
 function add_marker(map_instance, water_request) {
 
@@ -7,14 +18,25 @@ function add_marker(map_instance, water_request) {
   var name = water_request.name;
   var address = water_request.address;
   var amount = water_request.amount;
+  var date = water_request.date;
 
-  var blueMarker = L.AwesomeMarkers.icon({
-    icon: 'ion-waterdrop',
-    markerColor: 'blue',
-    prefix: 'ion'
-  });
+  var year = date.substring(0,4);
+  var month = date.substring(4,6);
+  var day = date.substring(6,8);
+  var hour = date.substring(8,10);
+  var minute = date.substring(10,12);
 
-  var marker = L.marker([lat, lng], {icon: blueMarker}).addTo(map_instance);
+  var water_date = new Date(year, month - 1, day, hour, minute);
+  var current_date = new Date();
+
+  var time_difference = (current_date - water_date)/1000/60/60;
+console.log(time_difference);
+  if (time_difference > 33) {
+    var marker = L.marker([lat, lng], {icon: redMarker}).addTo(map_instance);
+  }
+  else {
+    var marker = L.marker([lat, lng], {icon: blueMarker}).addTo(map_instance);
+  }
 
   var popup_text = name + "<br>" + address + "<br> Water amount: " + amount +
     "<br><br><button type='button' class='btn btn-danger' onclick='test_function(" + id + ")'>" +
@@ -48,4 +70,3 @@ function generate_popup(water_request) {
   $("#modal_address").text(water_request.address);
   $("#exampleModal").modal();
 }
-
