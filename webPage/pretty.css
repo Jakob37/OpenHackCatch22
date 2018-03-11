@@ -1,0 +1,13 @@
+body, html {
+    height: 100%;
+    background-image: url("capeTown.jpg");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.top-buffer { margin-top:20px; }

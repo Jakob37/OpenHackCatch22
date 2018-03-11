@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="pretty.css" >
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Openhack 2018</title>
+  </head>
+  <body>
+  <div class="col-sm-10 offset-sm-1 text-center top-buffer">
+      <h1>Openhack 2018 - Catch22</h1>
+
+      <form>
+        <div class="col-sm-4 offset-sm-4   text-center top-buffer">
+          <div class="col-auto">
+            <label for="name">Name</label>
+            <input type="txt" class="form-control" id="name" aria-describedby="name" placeholder="Ex: John Doe">
+          </div>
+         </div>
+          <div class="col-sm-4 offset-sm-4   text-center top-buffer">
+            <div class="col-auto">
+              <label for="phoneNumber">Phone number</label>
+              <input type="tel" class="form-control" id="inputPhone" aria-describedby="phoneHelp" placeholder="Ex: +46 19079380">
+              <small id="phoneHelp" class="form-text text-muted">We will use your phone number to transmit you information</small>
+            </div>
+           </div>
+
+          <div class="col-sm-4 offset-sm-4   text-center top-buffer">
+            <div class="col-auto">
+              <label for="Address">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="Ex: 18-6 Rhodesia St">
+            </div>
+          </div>
+          <div class="col-sm-2 offset-sm-5   text-center top-buffer">
+            <div class="col-auto">
+              <label for="">Amount of water</label>
+              <input type="number" class="form-control" id="waterAmount" placeholder="Ex: 1" min="1" max="10">
+            </div>
+          </div>
+          <div class="col-sm-4 offset-sm-4   text-center top-buffer">
+            <div class="col-auto">
+              <label for="comment">Comment</label>
+              <input type="comment" class="form-control" id="comment" placeholder="Ex: I have a dog, be careful!">
+            </div>
+          </div>
+          <button type="submit" id="myButton" class=" top-buffer btn btn-primary" >Submit</button>
+        </div>
+      </form>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      $('#myButton').on('click', function(event) {
+        event.preventDefault(); // To prevent following the link (optional)
+        send();
+      });
+      send = function(){
+        number = $('#inputPhone').val();
+        name = $('#name').val();
+        address = $('#address').val();
+        amount = $('#waterAmount').val();
+        comment = $('#comment').val();
+        console.log("Will be send")
+        $.ajax({
+              type: "POST",
+              url: 'https://openhack-catch22.herokuapp.com/addRequest',
+              data: { number: number, name:name, address:address, latitude:"", longitude:"", amount:amount, comment:comment},
+              dataType: 'application/json',
+            }).done(function() {
+              alert("Success.");
+            }).fail(function() {
+              alert("Succes*");
+            });
+        }
+    </script>
+
+  </body>
+</html>
